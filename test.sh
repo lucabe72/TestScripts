@@ -25,11 +25,12 @@ NEXTE=$RES
 RECV=`echo $NEXT - $PREV | bc`
 ERRS=`echo $NEXTE - $PREVE | bc`
 PPS=`sudo grep pps /proc/net/pktgen/eth1`
+DATE=`date --rfc-3339=sec`
 echo Next: $NEXT - Prev: $PREV = Recv: $RECV
 SENTPPS=$1
 echo $RECV/10000000*$SENTPPS
 echo "($RECV*$SENTPPS)/10000000" | bc
 PPS=$(((RECV*SENTPPS)/10000000))
 echo PPS: $PPS
-echo Recv: $RECV Errs: $ERRS $PPS >> res.txt
+echo Recv: $RECV Errs: $ERRS $PPS $DATE >> res.txt
 sudo cat /proc/net/pktgen/eth1 >> results
