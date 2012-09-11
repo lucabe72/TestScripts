@@ -18,20 +18,27 @@ RATE=$1
 sudo bash pktgen-test.cfg $RATE &
 PID=$!
 
+read_pkts 4
+PREV=$RES
+read_pkts 6
+PREVE=$RES
+PREVT=`date +%s.%N`
+
 while sudo kill -0 $PID
  do
-  read_pkts 4
-  PREV=$RES
-  read_pkts 6
-  PREVE=$RES
   sleep 1
   read_pkts 4
   NEXT=$RES
   read_pkts 6
   NEXTE=$RES
+  NEXTT=`date +%s.%N`
   RECV=`echo $NEXT - $PREV | bc`
   ERRS=`echo $NEXTE - $PREVE | bc`
   PPS=`sudo grep pps /proc/net/pktgen/eth1`
   DATE=`date --rfc-3339=sec`
-  echo Next: $NEXT - Prev: $PREV = Recv: $RECV
+  echo Next: $NEXT - Prev: $PREV = Recv: $RECV PPS_RCV: `echo "$RECV / ( $NEXTT - $PREVT )" | bc`
+
+  PREV=$NEXT
+  PREVE=$NEXTE
+  PREVT=$NEXTT
  done
