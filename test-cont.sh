@@ -1,4 +1,14 @@
 RES=---
+
+onexit()
+{
+ if sudo kill -0 $PID; then
+  sudo modprobe -r pktgen	# kill -9 doesn't seem to work
+  sudo modprobe pktgen
+ fi
+}
+trap onexit 0
+
 read_pkts() {
   TMP=`/sbin/ifconfig -s eth1 | grep eth1`
   RES=`echo $TMP | cut -d ' ' -f $1`
