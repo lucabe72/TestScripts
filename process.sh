@@ -15,6 +15,7 @@ packets_get() {
   for i in $IDXS
    do
     LINE=$((i*N+1+OFFS))
+    [ $LINECOUNT -ge $LINE ] || return
     ITEM=$(head -n $LINE $1 | tail -n 1)
 #    echo $LINE $ITEM
     echo $ITEM | cut -d ' ' -f 2
@@ -79,6 +80,7 @@ shift $((OPTIND-1))
 MAXPPSS=$((MAX-MIN))
 MAXPPSS=$((MAXPPSS/STEP))
 PPSS=$(seq 0 $MAXPPSS)
+LINECOUNT=$(wc -l $1 | cut -d ' ' -f 1)
 for i in $PPSS
  do
   PPS=$((MIN+i*STEP))
