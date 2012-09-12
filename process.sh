@@ -82,7 +82,7 @@ PPSS=$(seq 0 $MAXPPSS)
 for i in $PPSS
  do
   PPS=$((MIN+i*STEP))
-  if [[ $MODE == pkts ]];
+  if [ "$MODE" = "pkts" ];
    then
     RES=$(packets_get $1 $i)
    else
