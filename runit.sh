@@ -1,5 +1,25 @@
-ids=`seq 1 10`
-rates=`seq 300000 20000 600000`
+MIN=300000
+MAX=900000
+STEP=50000
+REPS=10
+
+while getopts m:M:s:r: opt
+ do
+  echo "Opt: $opt"
+  case "$opt" in
+    m)		MIN=$OPTARG;;
+    M)		MAX=$OPTARG;;
+    s)		STEP=$OPTARG;;
+    r)		REPS=$OPTARG;;
+    [?])	print >&2 "Usage: $0 [-m] [-M] [-s] [-r]"
+		exit 1;;
+  esac
+ done
+shift $((OPTIND-1))
+
+
+ids=`seq 1 $REPS`
+rates=`seq $MIN $STEP $MAX`
 
 for i in $ids
  do
