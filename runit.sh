@@ -25,7 +25,7 @@ for i in $ids
   for r in $rates
    do
     echo Run $i, Rate $r
-    bash test1.sh $r
+    bash test.sh $r
     sleep 40
    done
  done
