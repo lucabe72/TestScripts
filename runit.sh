@@ -18,8 +18,8 @@ while getopts m:M:s:r: opt
 shift $((OPTIND-1))
 
 
-ids=`seq 1 $REPS`
-rates=`seq $MIN $STEP $MAX`
+ids=$(seq 1 $REPS)
+rates=$(seq $MIN $STEP $MAX)
 
 for i in $ids
  do
