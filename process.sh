@@ -62,7 +62,6 @@ compute_stddev() {
 
 while getopts m:M:s:r:P opt
  do
-  echo "Opt: $opt"
   case "$opt" in
     m)		MIN=$OPTARG;;
     M)		MAX=$OPTARG;;

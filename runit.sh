@@ -5,7 +5,6 @@ REPS=10
 
 while getopts m:M:s:r: opt
  do
-  echo "Opt: $opt"
   case "$opt" in
     m)		MIN=$OPTARG;;
     M)		MAX=$OPTARG;;
