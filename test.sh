@@ -5,8 +5,6 @@ read_pkts() {
   RES=$(echo $TMP | cut -d ' ' -f $1)
 }
 
-#PREV=`/sbin/ifconfig -s eth1 | grep eth1 | cut -d ' ' -f 11`
-#PREVE=`/sbin/ifconfig -s eth1 | grep eth1 | cut -d ' ' -f 18`
 read_pkts 4
 PREV=$RES
 read_pkts 6
@@ -17,8 +15,6 @@ echo Prev: $PREV  PrevE: $PREVE
 sudo bash pktgen-test.cfg $1
 /sbin/ifconfig -s $CARD >> results
 
-#NEXT=`/sbin/ifconfig -s eth1 | grep eth1 | cut -d ' ' -f 11`
-#NEXTE=`/sbin/ifconfig -s eth1 | grep eth1 | cut -d ' ' -f 18`
 read_pkts 4
 NEXT=$RES
 read_pkts 6
