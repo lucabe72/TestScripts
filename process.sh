@@ -60,15 +60,16 @@ compute_stddev() {
   echo "sqrt($AVG)" | bc
 }
 
-while getopts m:M:s:r:P opt
+while getopts p:m:M:s:r:P opt
  do
   case "$opt" in
+    p)		PKTS=$OPTARG;;
     m)		MIN=$OPTARG;;
     M)		MAX=$OPTARG;;
     s)		STEP=$OPTARG;;
     r)		REPS=$OPTARG;;
     P)		MODE=pps;;
-    [?])	print >&2 "Usage: $0 [-m <min rare>] [-M <max rate>] [-s <rate step>] [-r <runs>] [-P]"
+    [?])	print >&2 "Usage: $0 [-p <packets>] [-m <min rare>] [-M <max rate>] [-s <rate step>] [-r <runs>] [-P]"
 		exit 1;;
   esac
  done
