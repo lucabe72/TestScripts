@@ -26,7 +26,7 @@ for i in $ids
    do
     echo Run $i, Rate $r
     bash test.sh $r
-    sleep 40
+    sleep 20
    done
  done
 
