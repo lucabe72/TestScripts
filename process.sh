@@ -68,7 +68,7 @@ while getopts m:M:s:r:P opt
     s)		STEP=$OPTARG;;
     r)		REPS=$OPTARG;;
     P)		MODE=pps;;
-    [?])	print >&2 "Usage: $0 [-v] [-p] [-P] [-b]"
+    [?])	print >&2 "Usage: $0 [-m <min rare>] [-M <max rate>] [-s <rate step>] [-r <runs>] [-P]"
 		exit 1;;
   esac
  done
