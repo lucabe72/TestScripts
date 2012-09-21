@@ -12,7 +12,7 @@ PREVE=$RES
 echo Prev: $PREV  PrevE: $PREVE
 
 /sbin/ifconfig -s $CARD >> results
-sudo bash pktgen-test.cfg $1
+sudo bash pktgen-test.cfg -r $1
 /sbin/ifconfig -s $CARD >> results
 
 read_pkts 4
