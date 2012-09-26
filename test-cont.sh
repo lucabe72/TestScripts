@@ -14,6 +14,7 @@ read_pkts() {
   RES=`echo $TMP | cut -d ' ' -f $1`
 }
 
+sudo modprobe pktgen
 RATE=$1
 sudo bash pktgen-test.cfg -m -r $RATE &
 PID=$!
