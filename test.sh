@@ -1,6 +1,7 @@
 RES=---
 CARD=eth1
 PKTS=10000000
+RATE=$1
 
 read_pkts() {
   TMP=$(/sbin/ifconfig -s $CARD | grep $CARD)
@@ -14,7 +15,7 @@ PREVE=$RES
 echo Prev: $PREV  PrevE: $PREVE
 
 /sbin/ifconfig -s $CARD >> results
-sudo bash pktgen-test.cfg -m -r $1 -p $PKTS
+sudo bash pktgen-test.cfg -m -r $RATE -p $PKTS
 /sbin/ifconfig -s $CARD >> results
 
 read_pkts 4
@@ -27,7 +28,7 @@ PPS=$(sudo grep pps /proc/net/pktgen/$CARD)
 TXPPS=$(echo $PPS | cut -d 'p' -f 1)
 DATE=$(date --rfc-3339=sec)
 echo Next: $NEXT - Prev: $PREV = Recv: $RECV
-SENTPPS=$1
+SENTPPS=$RATE
 echo $RECV/$PKTS*$SENTPPS
 echo "($RECV*$SENTPPS)/$PKTS" | bc
 PPS=$(((RECV*SENTPPS)/PKTS))
