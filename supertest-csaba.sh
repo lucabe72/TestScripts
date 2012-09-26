@@ -23,7 +23,7 @@ shift $((OPTIND-1))
 
 ids=$(seq 1 $REPS)
 
-rm res.txt
+rm -f res.txt
 
 one_test() {
  if [ $CONT -gt 0 ] ; then
@@ -50,8 +50,6 @@ one_test() {
   fi
  fi
 }
-
-b
 
 for i in $ids; do
   for testcase in $@; do
