@@ -15,7 +15,7 @@ read_pkts() {
 }
 
 RATE=$1
-sudo bash pktgen-test.cfg $RATE &
+sudo bash pktgen-test.cfg -m -r $RATE &
 PID=$!
 
 read_pkts 4
