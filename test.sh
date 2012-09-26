@@ -2,6 +2,8 @@ RES=---
 CARD=eth1
 PKTS=10000000
 RATE=$1
+shift
+XTRA=$@
 
 read_pkts() {
   TMP=$(/sbin/ifconfig -s $CARD | grep $CARD)
@@ -33,5 +35,5 @@ echo $RECV/$PKTS*$SENTPPS
 echo "($RECV*$SENTPPS)/$PKTS" | bc
 PPS=$(((RECV*SENTPPS)/PKTS))
 echo PPS: $PPS
-echo Recv: $RECV Errs: $ERRS $PPS $TXPPS $DATE >> res.txt
+echo Recv: $RECV Errs: $ERRS $PPS $TXPPS $DATE $SENTPPS $XTRA>> res.txt
 sudo cat /proc/net/pktgen/$CARD >> results
