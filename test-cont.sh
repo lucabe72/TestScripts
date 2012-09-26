@@ -22,6 +22,8 @@ read_pkts 4
 PREV=$RES
 read_pkts 6
 PREVE=$RES
+read_pkts 8
+PREVTX=$RES
 PREVT=`date +%s.%N`
 
 while sudo kill -0 $PID
@@ -31,14 +33,18 @@ while sudo kill -0 $PID
   NEXT=$RES
   read_pkts 6
   NEXTE=$RES
+  read_pkts 8
+  NEXTTX=$RES
   NEXTT=`date +%s.%N`
   RECV=`echo $NEXT - $PREV | bc`
   ERRS=`echo $NEXTE - $PREVE | bc`
+  TX=`echo $NEXTTX - $PREVTX | bc`
   PPS=`sudo grep pps /proc/net/pktgen/eth1`
   DATE=`date --rfc-3339=sec`
-  echo Next: $NEXT - Prev: $PREV = Recv: $RECV PPS_RCV: `echo "$RECV / ( $NEXTT - $PREVT )" | bc`
+  echo Next: $NEXT - Prev: $PREV = Recv: $RECV PPS_RCV: `echo "$RECV / ( $NEXTT - $PREVT )" | bc` PPS_TX: `echo "$TX / ( $NEXTT - $PREVT )" | bc`
 
   PREV=$NEXT
   PREVE=$NEXTE
+  PREVTX=$NEXTTX
   PREVT=$NEXTT
  done
