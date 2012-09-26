@@ -2,15 +2,17 @@ MIN=300000
 MAX=900000
 STEP=50000
 REPS=10
+XTRA=	# exta parameters to pass on
 
-while getopts m:M:s:r: opt
+while getopts m:M:s:r:x: opt
  do
   case "$opt" in
     m)		MIN=$OPTARG;;
     M)		MAX=$OPTARG;;
     s)		STEP=$OPTARG;;
     r)		REPS=$OPTARG;;
-    [?])	print >&2 "Usage: $0 [-m] [-M] [-s] [-r]"
+    x)		XTRA=$OPTARG;;
+    [?])	print >&2 "Usage: $0 [-m] [-M] [-s] [-r] [-x]"
 		exit 1;;
   esac
  done
@@ -25,7 +27,7 @@ for i in $ids
   for r in $rates
    do
     echo Run $i, Rate $r
-    bash test.sh $r
+    bash test.sh $r "$XTRA"
     sleep 20
    done
  done
