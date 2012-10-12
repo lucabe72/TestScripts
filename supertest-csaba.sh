@@ -34,7 +34,7 @@ one_test() {
   else
     sleep 5
 
-    sh runit.sh -m $MIN -M $MAX -s $STEP -r 1 -x "$i"
+    sh runit.sh -m $MIN -M $MAX -s $STEP -p $PKTS -r 1 -x "$i"
     sleep 1
     cat res.txt >>$1
     mkdir -p $1-logenv/$i
