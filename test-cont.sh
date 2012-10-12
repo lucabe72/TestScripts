@@ -16,7 +16,7 @@ read_pkts() {
 
 sudo modprobe pktgen
 RATE=$1
-sudo bash pktgen-test.cfg -m -r $RATE &
+sudo bash pktgen-test.cfg -m -r $RATE -p 0 &
 PID=$!
 
 read_pkts 4
