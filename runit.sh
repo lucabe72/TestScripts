@@ -29,8 +29,8 @@ for i in $ids
   for r in $rates
    do
     echo Run $i, Rate $r
-    bash test.sh $r "$XTRA"
-    sleep 20
+    bash test.sh -p $PKTS -r $r -x "$XTRA"
+    sleep 5
    done
  done
 
