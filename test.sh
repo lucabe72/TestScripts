@@ -1,9 +1,20 @@
 RES=---
 CARD=eth1
 PKTS=10000000
-RATE=$1
-shift
-XTRA=$@
+RATE=100000
+XTRA=
+
+while getopts r:p:x: opt
+ do
+  case "$opt" in
+    r)		RATE=$OPTARG;;
+    p)		PKTS=$OPTARG;;
+    x)		XTRA=$OPTARG;;
+    [?])	print >&2 "Usage: $0 [-r pps] [-p pkts] [-x xtras]"
+		exit 1;;
+  esac
+ done
+shift $((OPTIND-1))
 
 read_pkts() {
   TMP=$(/sbin/ifconfig -s $CARD | grep $CARD)
