@@ -1,0 +1,60 @@
+MIN=450000
+MAX=1400000
+STEP=50000
+PKTS=1000000
+
+testcase-lb-450-1400() {
+
+ ############## LB ###########
+ #make sure 1 router and 1 LB are running 
+ echo "killall qemu-system-x86_64" | nc 192.168.1.10 8888
+ sleep 3
+ echo "sh ~/MSR/start-msr-br.sh; exit" | nc 192.168.1.10 8888
+ 
+ sleep 40
+
+ #use 4 cores, bind
+ echo 'sh setvhost.sh -f "vnc :1" -v 2 -V 1 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 4 -V 8 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ one_test  res-4core-lb-bind-cs-450.txt
+
+ #use 4 cores, bind
+ echo 'sh setvhost.sh -f "vnc :1" -v 4 -V 8 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 1 -V 2 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ one_test  res-4core-lb-bind-cs2-450.txt
+
+ #use 1 core
+ echo 'sh setvhost.sh -f "vnc :1" -v 1 -V 1 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 1 -V 1 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test res-1core-lb-cs-450.txt
+
+ #use 2 cores, no bindings
+ echo 'sh setvhost.sh -f "vnc :1" -v 3 -V 3 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 3 -V 3 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test res-2core-lb-nobind-cs-450.txt
+
+ #use 2 cores, bind
+ echo 'sh setvhost.sh -f "vnc :1" -v 2 -V 1 -p 97 -P 98; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 2 -V 1 -p 99 -P 98; exit' | nc 192.168.1.10 8888
+ one_test  res-2core-lb-bind-rt-cs-450.txt
+
+ #use 2 cores, bind
+ echo 'sh setvhost.sh -f "vnc :1" -v 1 -V 2 -p 97 -P 98; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 1 -V 2 -p 99 -P 98; exit' | nc 192.168.1.10 8888
+ one_test  res-2core-lb-bind2-rt-cs-450.txt
+
+ #use 2 cores, bind
+ echo 'sh setvhost.sh -f "vnc :1" -v 1 -V 2 -p 97 -P 98; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 2 -V 1 -p 99 -P 98; exit' | nc 192.168.1.10 8888
+ one_test  res-2core-lb-bind3-rt-cs-450.txt
+
+ #use 2 cores, bind
+ echo 'sh setvhost.sh -f "vnc :1" -v 2 -V 1 -p 97 -P 98; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 1 -V 2 -p 99 -P 98; exit' | nc 192.168.1.10 8888
+ one_test  res-2core-lb-bind4-rt-cs-450.txt
+
+ #use 4 cores, nobind
+ echo 'sh setvhost.sh -f "vnc :1" -v 15 -V 15 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 15 -V 15 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test  res-4core-lb-nobind-cs-450.txt
+}

@@ -1,0 +1,16 @@
+
+testcase-lb-4core-bind() {
+ MIN=40000
+ MAX=400000
+ STEP=20000
+ PKTS=1000000
+ #manual binding
+ one_test  res-4core-lb-bind3-cs.txt
+ 
+ MIN=450000
+ MAX=1400000
+ STEP=50000
+ PKTS=1000000
+ #manual binding
+ one_test  res-4core-lb-bind3-cs-450.txt
+}

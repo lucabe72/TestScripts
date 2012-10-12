@@ -1,0 +1,34 @@
+MIN=300000
+MAX=1400000
+STEP=50000
+PKTS=10000000
+
+SLEEP=40
+
+testcase-mq-reduced() {
+
+ ############## 2 routers ###########
+ #make sure all 2 routers are running 
+ echo "killall qemu-system-x86_64" | nc 192.168.1.10 8888
+ sleep 3
+ echo "sh start-msr-mq-one.sh 1; exit" | nc 192.168.1.10 8888
+ sleep 1
+ echo "sh start-msr-mq-one.sh 2; exit" | nc 192.168.1.10 8888
+ sleep $SLEEP
+
+ #No bindings
+ echo 'sh setvhost.sh -f "vnc :1" -v 15 -V 15 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 15 -V 15 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test res-4core-2router-nobind-cs.txt
+
+ #bindings
+ #echo 'sh setvhost.sh -f "vnc :1" -v 1 -V 4 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ #echo 'sh setvhost.sh -f "vnc :2" -v 2 -V 8 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ #one_test res-4core-2router-bind-cs.txt
+
+ #bindings
+ echo 'sh setvhost.sh -f "vnc :1" -v 4 -V 6 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ echo 'sh setvhost.sh -f "vnc :2" -v 8 -V 10 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ one_test res-4core-2router-bind2-cs.txt
+
+}

@@ -1,0 +1,33 @@
+MIN=300000
+MAX=1400000
+STEP=50000
+PKTS=10000000
+
+SLEEP=40
+
+testcase-1router-Ncore() {
+
+ ############## 1 router ###########
+ #make sure 1 router is running 
+ echo "killall qemu-system-x86_64" | nc 192.168.1.10 8888
+ sleep 3
+ echo "sh start-msr-mq-one.sh 1; exit" | nc 192.168.1.10 8888
+ sleep $SLEEP
+
+ #use 1 core
+ echo 'sh setvhost.sh -f "vnc :1" -v 1 -V 1 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test res-1core-1router.txt
+
+ #use 2 cores, no bindings
+ echo 'sh setvhost.sh -f "vnc :1" -v 3 -V 3 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test  res-2core-1router-nobind.txt
+
+ echo 'sh setvhost.sh -f "vnc :1" -v 1 -V 2 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ one_test res-2core-1router-bind-rt.txt
+
+ echo 'sh setvhost.sh -f "vnc :1" -v 15 -V 15 -p 0 -P 0; exit' | nc 192.168.1.10 8888
+ one_test  res-4core-1router-nobind.txt
+
+ echo 'sh setvhost.sh -f "vnc :1" -v 4 -V 8 -p 99 -P 99; exit' | nc 192.168.1.10 8888
+ one_test res-4core-1router-bind-rt.txt
+}
