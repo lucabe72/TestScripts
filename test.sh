@@ -3,13 +3,15 @@ CARD=eth1
 PKTS=10000000
 RATE=100000
 XTRA=
+MULTI_DST=
 
-while getopts r:p:x: opt
+while getopts r:p:x:m opt
  do
   case "$opt" in
     r)		RATE=$OPTARG;;
     p)		PKTS=$OPTARG;;
     x)		XTRA=$OPTARG;;
+    m)		MULTI_DST=-m;;
     [?])	print >&2 "Usage: $0 [-r pps] [-p pkts] [-x xtras]"
 		exit 1;;
   esac
@@ -28,7 +30,7 @@ PREVE=$RES
 echo Prev: $PREV  PrevE: $PREVE
 
 /sbin/ifconfig -s $CARD >> results
-sudo bash pktgen-test.cfg -m -r $RATE -p $PKTS
+sudo bash pktgen-test.cfg $MULTI_DST -r $RATE -p $PKTS
 /sbin/ifconfig -s $CARD >> results
 
 read_pkts 4
