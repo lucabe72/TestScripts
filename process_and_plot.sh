@@ -1,5 +1,7 @@
+BINDIR=`dirname $0`
+
 for file in `ls res*.txt`; do
-  [ -f $dir ] && sh ./process.sh -m 300000 -M 1400000 -s 50000 -P $file > ${file/res-/}
+  [ -f $dir ] && sh $BINDIR/process.sh $@ $file > ${file/res-/}
 done
 
 cat <<END >tmp.gnu
