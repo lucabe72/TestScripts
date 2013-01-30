@@ -1,8 +1,9 @@
 BINDIR=`dirname $0`
 PREFIX="res-"
+PROC_PREFIX="procesed-"
 
 for file in `ls $PREFIX*.txt`; do
-  [ -f $dir ] && sh $BINDIR/process.sh $@ $file > ${file/$PREFIX/}
+  [ -f $dir ] && sh $BINDIR/process.sh $@ $file > $PROC_PREFIX$file
 done
 
 cat <<END >tmp.gnu
@@ -14,7 +15,7 @@ plot x
 END
 
 for file in `ls $PREFIX*.txt`; do
-  echo 'replot "'${file/$PREFIX/}'" u 1:2:3 w yerrorlines t "'${file/$PREFIX/}'"' >>tmp.gnu
+  echo 'replot "'$PROC_PREFIX$file'" u 1:2:3 w yerrorlines t "'$file'"' >>tmp.gnu
 done
 
 cat <<END >>tmp.gnu
