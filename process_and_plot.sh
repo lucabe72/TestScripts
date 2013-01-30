@@ -10,6 +10,7 @@ cat <<END >tmp.gnu
 set xr [0:]
 set yr [0:]
 set key left
+set terminal unknown
 
 plot x
 END
