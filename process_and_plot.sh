@@ -1,17 +1,22 @@
-for file in `ls res*.txt`; do
-  [ -f $dir ] && sh ./process.sh -m 300000 -M 1400000 -s 50000 -P $file > ${file/res-/}
+BINDIR=`dirname $0`
+PREFIX="res-"
+PROC_PREFIX="procesed-"
+
+for file in `ls $PREFIX*.txt`; do
+  [ -f $dir ] && sh $BINDIR/process.sh $@ $file > $PROC_PREFIX$file
 done
 
 cat <<END >tmp.gnu
 set xr [0:]
 set yr [0:]
 set key left
+set terminal unknown
 
 plot x
 END
 
-for file in `ls res*.txt`; do
-  echo 'replot "'${file/res-/}'" u 1:2:3 w yerrorlines t "'${file/res-/}'"' >>tmp.gnu
+for file in `ls $PREFIX*.txt`; do
+  echo 'replot "'$PROC_PREFIX$file'" u 1:2:3 w yerrorlines t "'$file'"' >>tmp.gnu
 done
 
 cat <<END >>tmp.gnu
