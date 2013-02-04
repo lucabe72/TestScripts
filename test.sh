@@ -19,24 +19,20 @@ while getopts r:p:x:m opt
 shift $((OPTIND-1))
 
 read_pkts() {
-  TMP=$(/sbin/ifconfig -s $CARD | grep $CARD)
-  RES=$(echo $TMP | cut -d ' ' -f $1)
+  echo $(grep $1 /proc/net/dev) | cut -d ' ' -f $2
 }
 
-read_pkts 4
-PREV=$RES
-read_pkts 6
-PREVE=$RES
+
+PREV=$(read_pkts $CARD 3)
+PREVE=$(read_pkts $CARD 4)
 echo Prev: $PREV  PrevE: $PREVE
 
-/sbin/ifconfig -s $CARD >> results
+/sbin/ifconfig $CARD >> results
 sudo bash pktgen-test.cfg $MULTI_DST -r $RATE -p $PKTS
-/sbin/ifconfig -s $CARD >> results
+/sbin/ifconfig $CARD >> results
 
-read_pkts 4
-NEXT=$RES
-read_pkts 6
-NEXTE=$RES
+NEXT=$(read_pkts $CARD 3)
+NEXTE=$(read_pkts $CARD 4)
 RECV=$((NEXT - PREV))
 ERRS=$((NEXTE - PREVE))
 PPS=$(sudo grep pps /proc/net/pktgen/$CARD)
