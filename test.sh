@@ -5,13 +5,14 @@ RATE=100000
 XTRA=
 MULTI_DST=
 
-while getopts r:p:x:m opt
+while getopts i:r:p:x:m opt
  do
   case "$opt" in
     r)		RATE=$OPTARG;;
     p)		PKTS=$OPTARG;;
     x)		XTRA=$OPTARG;;
     m)		MULTI_DST=-m;;
+    i)		CARD=$OPTARG;;
     [?])	print >&2 "Usage: $0 [-r pps] [-p pkts] [-x xtras]"
 		exit 1;;
   esac
