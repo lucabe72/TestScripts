@@ -28,7 +28,7 @@ PREVE=$(read_pkts $CARD 4)
 echo Prev: $PREV  PrevE: $PREVE
 
 /sbin/ifconfig $CARD >> results
-sudo bash pktgen-test.cfg $MULTI_DST -r $RATE -p $PKTS
+sudo bash pktgen-test.cfg $MULTI_DST -i $CARD -r $RATE -p $PKTS
 /sbin/ifconfig $CARD >> results
 
 NEXT=$(read_pkts $CARD 3)
