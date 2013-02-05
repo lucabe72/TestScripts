@@ -38,7 +38,7 @@ RECV=$((NEXT - PREV))
 ERRS=$((NEXTE - PREVE))
 PPS=$(sudo grep pps /proc/net/pktgen/$CARD)
 TXPPS=$(echo $PPS | cut -d 'p' -f 1)
-DATE=$(date)
+DATE=$(date -Iseconds)
 echo Next: $NEXT - Prev: $PREV = Recv: $RECV
 SENTPPS=$RATE
 echo $RECV/$PKTS*$SENTPPS
