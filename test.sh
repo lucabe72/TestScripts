@@ -29,7 +29,7 @@ PREVE=$(read_pkts $CARD 4)
 echo Prev: $PREV  PrevE: $PREVE
 
 /sbin/ifconfig $CARD >> results
-sudo bash pktgen-test.cfg $MULTI_DST -i $CARD -r $RATE -p $PKTS
+sudo sh pktgen-test.cfg $MULTI_DST -i $CARD -r $RATE -p $PKTS
 /sbin/ifconfig $CARD >> results
 
 NEXT=$(read_pkts $CARD 3)
@@ -38,12 +38,14 @@ RECV=$((NEXT - PREV))
 ERRS=$((NEXTE - PREVE))
 PPS=$(sudo grep pps /proc/net/pktgen/$CARD)
 TXPPS=$(echo $PPS | cut -d 'p' -f 1)
-DATE=$(date --rfc-3339=sec)
+DATE=$(date)
 echo Next: $NEXT - Prev: $PREV = Recv: $RECV
 SENTPPS=$RATE
 echo $RECV/$PKTS*$SENTPPS
+SENTPPS=$((SENTPPS/10000))
+PKTS=$((PKTS/10000))
 echo $(((RECV*SENTPPS)/PKTS))
 PPS=$(((RECV*SENTPPS)/PKTS))
 echo PPS: $PPS
-echo Recv: $RECV Errs: $ERRS $PPS $TXPPS $DATE $SENTPPS $XTRA>> res.txt
+echo Recv: $RECV Errs: $ERRS $PPS $TXPPS $DATE $((SENTPPS*10000)) $XTRA>> res.txt
 sudo cat /proc/net/pktgen/$CARD >> results
