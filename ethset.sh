@@ -1,4 +1,4 @@
-e1000e_reset {
+e1000e_reset() {
   #Remove and re-insert the e1000e module, to start from a clean config...
   sudo /sbin/rmmod e1000e
   #sudo /sbin/modprobe e1000e TxIntDelay=0 TxAbsIntDelay=0 RxAbsIntDelay=0 RxIntDelay=0 InterruptThrottleRate=0
