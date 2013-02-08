@@ -14,7 +14,7 @@ sudo /sbin/ifconfig eth$1 192.168.1.1
 sudo /sbin/ifconfig eth$1 txqueuelen 1000000
 sudo /sbin/ifconfig eth$1:0 192.168.2.1
 sleep 5
-sudo /sbin/ethtool -A eth$1 autoneg off rx off tx off
+sudo ethtool -A eth$1 autoneg off rx off tx off
 #sudo /bin/echo 1 > /proc/sys/net/ipv4/ip_forward
 sudo /sbin/modprobe pktgen
 
