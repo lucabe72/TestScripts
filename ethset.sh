@@ -8,7 +8,6 @@ e1000e_reset {
 }
 
 sudo /sbin/ifdown eth$1
-e1000e_reset
 sleep 1
 sudo /sbin/ifconfig eth$1 192.168.1.1
 sudo /sbin/ifconfig eth$1 txqueuelen 1000000
