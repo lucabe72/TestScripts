@@ -4,10 +4,12 @@ STEP=50000
 REPS=10
 PKTS=10000000
 XTRA=	# exta parameters to pass on
+CARD=eth1
 
-while getopts m:M:s:r:p:x: opt
+while getopts i:m:M:s:r:p:x: opt
  do
   case "$opt" in
+    i)		CARD=$OPTARG;;
     m)		MIN=$OPTARG;;
     M)		MAX=$OPTARG;;
     s)		STEP=$OPTARG;;
@@ -29,7 +31,7 @@ for i in $ids
   for r in $rates
    do
     echo Run $i, Rate $r
-    bash test.sh -p $PKTS -r $r -x "$XTRA"
+    bash test.sh -i $CARD -p $PKTS -r $r -x "$XTRA"
     sleep 5
    done
  done

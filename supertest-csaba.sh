@@ -7,10 +7,12 @@ BINDIR=`pwd`
 MIN=300000
 MAX=1400000
 STEP=50000
+CARD=eth1
 
-while getopts r:c:m:M:s: opt
+while getopts i:r:c:m:M:s: opt
  do
   case "$opt" in
+    i)		CARD=$OPTARG;;
     m)		MIN=$OPTARG;;
     M)		MAX=$OPTARG;;
     s)		STEP=$OPTARG;;
@@ -34,7 +36,7 @@ one_test() {
   else
     sleep 5
 
-    sh runit.sh -m $MIN -M $MAX -s $STEP -p $PKTS -r 1 -x "$i"
+    sh runit.sh -i $CARD -m $MIN -M $MAX -s $STEP -p $PKTS -r 1 -x "$i"
     sleep 1
     cat res.txt >>$1
     mkdir -p $1-logenv/$i
