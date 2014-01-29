@@ -4,12 +4,13 @@ rsh()
 {
 nc 192.168.1.10 8888 <<END
 $1
+exit
 END
 }
 
 rsh "date" > date
 rsh "uname -a" >uname
-rsh "ifconfig -a" >ifconfig
+rsh "/sbin/ifconfig -a" >ifconfig
 rsh "cat /proc/cpuinfo" >cpuinfo
 rsh "lsusb" >lsusb
 rsh "lspci" >lspci

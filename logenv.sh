@@ -1,16 +1,16 @@
 
 logeth()
 {
-  ethtool -i $1 >$1
-  ethtool -a $1 >>$1
-  ethtool -c $1 >>$1
-  ethtool -g $1 >>$1
-  ethtool -k $1 >>$1
+  /sbin/ethtool -i $1 >$1
+  /sbin/ethtool -a $1 >>$1
+  /sbin/ethtool -c $1 >>$1
+  /sbin/ethtool -g $1 >>$1
+  /sbin/ethtool -k $1 >>$1
 }
 
 date > date
 uname -a >uname
-ifconfig -a >ifconfig
+/sbin/ifconfig -a >ifconfig
 cat /proc/cpuinfo >cpuinfo
 lsusb >lsusb
 lspci >lspci
