@@ -38,6 +38,7 @@ one_test() {
 
     sh runit.sh -i $CARD -m $MIN -M $MAX -s $STEP -p $PKTS -r 1 -x "$i"
     sleep 1
+    mkdir -p CPUStat-$1; mv cpuload* CPUStat-$1
     cat res.txt >>$1
     mkdir -p $1-logenv/$i
     mv res.txt $1-logenv/$i

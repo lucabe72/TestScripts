@@ -32,6 +32,7 @@ for i in $ids
    do
     echo Run $i, Rate $r
     bash test.sh -i $CARD -p $PKTS -r $r -x "$XTRA"
+    echo "cat /tmp/cpuload.txt; exit" | nc 192.168.1.10 8888 > cpuload-$r.txt
     sleep 5
    done
  done

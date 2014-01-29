@@ -29,7 +29,9 @@ PREVE=$(read_pkts $CARD 4)
 echo Prev: $PREV  PrevE: $PREVE
 
 /sbin/ifconfig $CARD >> results
+echo "mpstat -P ALL 1 < /dev/null > /tmp/cpuload.txt 2> /dev/null & exit" | nc 192.168.1.10 8888
 sudo sh pktgen-test.cfg $MULTI_DST -i $CARD -r $RATE -p $PKTS
+echo "killall mpstat; exit" | nc 192.168.1.10 8888
 /sbin/ifconfig $CARD >> results
 
 NEXT=$(read_pkts $CARD 3)
